@@ -16,8 +16,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>group.id</groupId>
-            <artifactId>artifact.id</artifactId>
+            <groupId>mysql</groupId>
+            <artifactId>mysql</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
