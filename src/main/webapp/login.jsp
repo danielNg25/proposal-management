@@ -4,6 +4,8 @@
     Author     : 11
 --%>
 
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,9 +14,13 @@
         <title>Login Page</title>
     </head>
     <body>
-        <form>
-            <label for="fname">First name</label>
-            <input type="text" id="fname" name="fname">
+        <form action="LoginController" method="POST"> 
+            <h1>Login</h1>
+            <h6>{{ message }}</h6>
+            <input type="text" class="form-control" name="username" placeholder="User name">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <hr>
         </form>
     </body>
 </html>
