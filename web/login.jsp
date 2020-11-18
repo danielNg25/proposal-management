@@ -17,6 +17,13 @@
             <input type="text" name="username" placeholder="User name">
             <input type="password" name="password" placeholder="Password">
             <input type="submit" value="login">
+            
+            <%
+                String err = request.getParameter("err");
+                if ("1".equals(err)) {
+			out.print("<h4 style=\"color: red;\">Username or password is incorrect</h4>");
+		}
+            %>
             <hr>
         </form>
     </body>
