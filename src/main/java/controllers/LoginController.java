@@ -6,6 +6,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,9 +22,8 @@ import services.MySqlConnection;
 
 /**
  *
- * @author 11
+ * @author ACER
  */
-@WebServlet(name = "login", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
 
     /**
@@ -38,22 +37,25 @@ public class LoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        ServletOutputStream out = response.getOutputStream();
+        
         try {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            ServletOutputStream out = response.getOutputStream();
-            Class.forName("com.mysql.jdbc.Driver");
             if (validate(username, password)) {
-                out.println("<h1>Login success!</h1>");
+                response.sendRedirect("main.jsp");
             }
             else {
-                out.println("<h1>Username or password is incorrect.</h1>");
+                response.sendRedirect("login.jsp?err=1");
             }
         } catch (SQLException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -95,19 +97,19 @@ public class LoginController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-    public boolean validate(String username, String password) throws SQLException, ClassNotFoundException{
-        Connection connection = MySqlConnection.getMySqlConnection();
-        Statement st = connection.createStatement();
+    private boolean validate(String username, String password) throws SQLException, ClassNotFoundException {
+        Connection conn = MySqlConnection.getMySqlConnection();
+        Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM users WHERE username = '" + username +"'");
         if (rs == null) {
             return false;
         }
-        while (rs.next()) {                
-            if (rs.getString("password") == null ? password == null : rs.getString("password").equals(password)) {
+        while (rs.next()) {
+            if (rs.getString("password").equals(password)) {
                 return true;
             }
         }
-        connection.close();
+        conn.close();
         return false;
     }
 }
