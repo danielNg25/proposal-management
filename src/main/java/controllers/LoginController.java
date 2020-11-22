@@ -18,7 +18,12 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import models.NguoiDan;
+import models.User;
 import services.MySqlConnection;
+import services.NguoiDanService;
+import services.UserService;
 
 /**
  *
@@ -40,11 +45,33 @@ public class LoginController extends HttpServlet {
         
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        ServletOutputStream out = response.getOutputStream();
+        PrintWriter out = response.getWriter();
         
         try {
-            if (validate(username, password)) {
-                response.sendRedirect("main.jsp");
+            int userID = UserService.validateLogin(username, password);
+            if (userID != -1) {
+                HttpSession session = request.getSession();
+                User user = new User();
+                user.setID(userID);
+                user.setUserName(username);
+                user.setPasswd(password);
+                
+                session.setAttribute("userID", userID);
+                request.setAttribute("user", user);
+                
+                NguoiDan nd = NguoiDanService.getNguoiDan(userID);
+                request.setAttribute("nguoiDan", nd);
+                request.setAttribute("hoTen", nd.getHoTen());
+                request.setAttribute("diaChi", nd.getDiaChi());
+                request.setAttribute("sdt", nd.getSoDienThoai());
+                request.setAttribute("email", nd.getEmail());
+                request.setAttribute("gioiTinh", nd.getGioiTinh());
+                request.setAttribute("cmnd", nd.getCmnd());
+                
+                response.setContentType("text/html;charset=UTF-8");
+                request.setCharacterEncoding("UTF-8");
+
+                request.getRequestDispatcher("userpage.jsp").forward(request, response);
             }
             else {
                 response.sendRedirect("login.jsp?err=1");
@@ -53,6 +80,8 @@ public class LoginController extends HttpServlet {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            out.close();
         }
         
         
@@ -97,19 +126,4 @@ public class LoginController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-    private boolean validate(String username, String password) throws SQLException, ClassNotFoundException {
-        Connection conn = MySqlConnection.getMySqlConnection();
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM users WHERE username = '" + username +"'");
-        if (rs == null) {
-            return false;
-        }
-        while (rs.next()) {
-            if (rs.getString("password").equals(password)) {
-                return true;
-            }
-        }
-        conn.close();
-        return false;
-    }
 }
