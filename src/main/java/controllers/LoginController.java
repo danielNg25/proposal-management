@@ -49,7 +49,7 @@ public class LoginController extends HttpServlet {
         
         try {
             int userID = UserService.validateLogin(username, password);
-            if (userID != -1) {
+            if (userID != -1 && userID!=0) {
                 HttpSession session = request.getSession();
                 User user = new User();
                 user.setID(userID);
@@ -71,7 +71,10 @@ public class LoginController extends HttpServlet {
                 response.setContentType("text/html;charset=UTF-8");
                 request.setCharacterEncoding("UTF-8");
 
-                request.getRequestDispatcher("adminpage.jsp").forward(request, response);
+                    request.getRequestDispatcher("userpage.jsp").forward(request, response);
+            }
+            else if (userID!=-1) {
+                response.sendRedirect("adminpage.jsp");
             }
             else {
                 response.sendRedirect("login.jsp?err=1");

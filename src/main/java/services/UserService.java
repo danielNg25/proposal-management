@@ -25,7 +25,8 @@ public class UserService {
         }
         while (rs.next()) {
             if (rs.getString("password").equals(password)) {
-                return rs.getInt("id");
+                if (rs.getString("role").equals("admin")) return 0;
+                    else return rs.getInt("id");
             }
         }
         conn.close();
