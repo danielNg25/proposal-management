@@ -21,7 +21,7 @@
                 <ul>
                     <li><a href="#"><i class="fas fa-home"></i>Trang chủ</a></li>
                     <li><a href="#"><i class="fas fa-user"></i>Hồ Sơ</a></li>
-                    <li><a href="#"><i class="fas fa-address-card"></i>Thông Tin Kiến Nghị</a></li>                    
+                    <li><a href="quanly"><i class="fas fa-address-card"></i>Thông Tin Kiến Nghị</a></li>                    
                     <li><a href="#"><i class="fas fa-address-book"></i>Gửi Kiến Nghị</a></li>
                     <li><a href="login.jsp">Đăng Xuất</a></li>
                 </ul> 
