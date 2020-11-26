@@ -45,7 +45,7 @@
     <div id="main" class="container">
         <div class="row">
         <div class="col lg-10">
-            <form>
+            <form action="guikiennghi" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label for="inputHoTen">Người dân</label>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="form-group">
                     <label for="inputNoiDung">Nội dung</label>
-                    <textarea class="form-control" id="inputNoiDung" rows="5" placeholder="Nội dung"></textarea>
+                    <textarea class="form-control" id="inputNoiDung" rows="5" placeholder="Nội dung" name="noiDung"></textarea> 
                 </div>
                 <button type="submit" class="btn btn-primary">Gửi phản ánh</button>
             </form>
