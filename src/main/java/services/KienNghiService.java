@@ -6,6 +6,7 @@
 package services;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -70,6 +71,28 @@ public class KienNghiService {
         conn.close();
         return listKienNghi;
     }
+    
+    public void GuiKienNghi(KienNghi kienNghi) throws SQLException, ClassNotFoundException{
+        Connection conn = MySqlConnection.getMySqlConnection();
+        String sql = "INSERT INTO kienNghi (tieuDe, nguoigui_id, ngayPhanAnh, noiDung, trangThai) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, kienNghi.getTieuDe());
+        ps.setInt(2, kienNghi.getNguoigui_id());
+        ps.setDate(3, (java.sql.Date) kienNghi.getNgayPhanAnh());
+        ps.setString(4, kienNghi.getTrangThai());
+        ps.setString(5, kienNghi.getNoiDung());
+        int i = ps.executeUpdate();
+        if(i > 0)
+            {
+            System.out.println("Da gui thanh cong");
+           }
+        else
+            {
+            System.out.println("Da xay ra loi.");
+           }
+        conn.close();
+    }
+    
     
     public static void main(String[] args) {
         try {
