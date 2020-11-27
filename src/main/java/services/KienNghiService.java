@@ -72,7 +72,7 @@ public class KienNghiService {
         return listKienNghi;
     }
     
-    public void GuiKienNghi(KienNghi kienNghi) throws SQLException, ClassNotFoundException{
+    public static void GuiKienNghi(KienNghi kienNghi) throws SQLException, ClassNotFoundException{
         Connection conn = MySqlConnection.getMySqlConnection();
         String sql = "INSERT INTO kienNghi (tieuDe, nguoigui_id, ngayPhanAnh, noiDung, trangThai) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql);

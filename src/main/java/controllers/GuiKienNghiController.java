@@ -7,19 +7,25 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import models.KienNghi;
+import services.KienNghiService;
 
 /**
  *
  * @author VietAnh
  */
+@WebServlet(name = "GuiKienNghiController", urlPatterns = {"/guikn"})
 public class GuiKienNghiController extends HttpServlet {
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,17 +37,32 @@ public class GuiKienNghiController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+             HttpSession session = request.getSession();
             String tieuDe = request.getParameter("tieuDe");
-            int nguoigui_id = Integer.parseInt(request.getParameter("nguoiguiID"));
-            String ngayPhanAnhstr = request.getParameter("ngayPhanAnh");
-                Date ngayPhanAnh = new SimpleDateFormat("dd/MM/yyyy").parse(ngayPhanAnhstr);
+            int nguoigui_id = (int) session.getAttribute("userID");
+            java.util.Date ngayPhanAnh = new java.util.Date();
             String noiDung = request.getParameter("noiDung");
-            String trangThai = request.getParameter("trangThai");
+            String trangThai = "chưa xử  lí!";
+            String phanLoai = request.getParameter("phanLoai");
+            KienNghi kn = new KienNghi();
+            kn.setTieuDe(tieuDe);
+            kn.setNguoigui_id(nguoigui_id);
+            kn.setNoiDung(noiDung);
+            kn.setNgayPhanAnh(ngayPhanAnh);
+            kn.setTrangThai(trangThai);
+            kn.setPhanLoai(phanLoai);
+            KienNghiService.GuiKienNghi(kn);
+            request.getRequestDispatcher("userpage.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(GuiKienNghiController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GuiKienNghiController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,7 +74,26 @@ public class GuiKienNghiController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
     /**
      * Returns a short description of the servlet.
      *
@@ -65,3 +105,4 @@ public class GuiKienNghiController extends HttpServlet {
     }// </editor-fold>
 
 }
+

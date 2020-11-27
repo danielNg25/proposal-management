@@ -41,9 +41,7 @@
     </servlet-mapping><servlet-mapping>
         <servlet-name>GuiKienNghiController</servlet-name>
         <url-pattern>/guikiennghi</url-pattern>
-    </servlet-mapping><servlet-mapping>
-        <servlet-name>GuiKienNghiService</servlet-name>
-        <url-pattern>/guikiennghiservice</url-pattern>
+
     </servlet-mapping><session-config>
         <session-timeout>
             30
