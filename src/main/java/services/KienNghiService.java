@@ -74,13 +74,14 @@ public class KienNghiService {
     
     public static void GuiKienNghi(KienNghi kienNghi) throws SQLException, ClassNotFoundException{
         Connection conn = MySqlConnection.getMySqlConnection();
-        String sql = "INSERT INTO kienNghi (tieuDe, nguoigui_id, ngayPhanAnh, noiDung, trangThai) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO kienNghi (tieuDe, nguoigui_id, ngayPhanAnh, noiDung, trangThai, phanLoai) VALUES (?, ?, ?, ?, ?,?)";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, kienNghi.getTieuDe());
         ps.setInt(2, kienNghi.getNguoigui_id());
         ps.setDate(3, (java.sql.Date) kienNghi.getNgayPhanAnh());
-        ps.setString(4, kienNghi.getTrangThai());
-        ps.setString(5, kienNghi.getNoiDung());
+        ps.setString(4, kienNghi.getNoiDung());
+        ps.setString(5, kienNghi.getTrangThai());
+        ps.setString(6, kienNghi.getPhanLoai());
         int i = ps.executeUpdate();
         if(i > 0)
             {
@@ -98,6 +99,7 @@ public class KienNghiService {
         try {
             KienNghi kienNghi = getKienNghi(1);
             System.out.println(kienNghi);
+            GuiKienNghi(kienNghi);
         } catch (SQLException ex) {
             Logger.getLogger(KienNghiService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

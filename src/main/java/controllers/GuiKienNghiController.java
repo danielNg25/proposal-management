@@ -44,7 +44,8 @@ public class GuiKienNghiController extends HttpServlet {
              HttpSession session = request.getSession();
             String tieuDe = request.getParameter("tieuDe");
             int nguoigui_id = (int) session.getAttribute("userID");
-            java.util.Date ngayPhanAnh = new java.util.Date();
+            long millis = System.currentTimeMillis();
+            java.sql.Date ngayPhanAnh = new java.sql.Date(millis);
             String noiDung = request.getParameter("noiDung");
             String trangThai = "chưa xử  lí!";
             String phanLoai = request.getParameter("phanLoai");

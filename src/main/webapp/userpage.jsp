@@ -94,7 +94,7 @@
                             <label for="inputNoiDung">Nội dung</label>
                             <textarea class="form-control" id="inputNoiDung" rows="5" placeholder="Nội dung" name="noiDung"></textarea> 
                         </div>
-                        <button type="submit" class="btn btn-primary">Gửi phản ánh</button>
+                            <button type="submit" class="btn btn-primary">Gửi phản ánh</button>
                     </form>
                 </div>
             </div>
