@@ -7,6 +7,7 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,16 +40,17 @@ public class GuiKienNghiController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-             HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
             String tieuDe = request.getParameter("tieuDe");
             int nguoigui_id = (int) session.getAttribute("userID");
             long millis = System.currentTimeMillis();
             java.sql.Date ngayPhanAnh = new java.sql.Date(millis);
             String noiDung = request.getParameter("noiDung");
-            String trangThai = "chưa xử  lí!";
+            String trangThai = "chưa trả lời";
             String phanLoai = request.getParameter("phanLoai");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+             
             KienNghi kn = new KienNghi();
             kn.setTieuDe(tieuDe);
             kn.setNguoigui_id(nguoigui_id);
@@ -79,8 +81,8 @@ public class GuiKienNghiController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *

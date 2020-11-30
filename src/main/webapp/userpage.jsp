@@ -45,7 +45,7 @@
         </nav>
         <div id="main" class="container">
             <div class="row">
-                <div class="col lg-10">
+                <div class="col lg-10">                  
                     <form action="guikiennghi" method="post">
                         <div class="form-row">
                             <div class="form-group col-md-5">
