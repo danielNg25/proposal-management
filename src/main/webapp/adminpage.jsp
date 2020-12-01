@@ -43,15 +43,36 @@
             </div>
             <div class="main_content">
                 <div class="header"><h1>THỐNG KÊ QUẢN LÝ KIẾN NGHỊ</h1></div>  
-            <div class="info">
-                <br/>
-                <div><h2>Số Lượng Kiến Nghị <% out.print(tk.SoLuong); %></h2></div>
-                <div><h2>Đã Trả Lời <% out.print(tk.DaTraLoi); %></h2></div>
-                <div><h2>Chưa Trả Lời <% out.print(tk.ChuaTraLoi); %></h2></div>
-                <div><h2>Các Loại Kiến Nghị <% out.print(tk.CacLoai); %></h2></div>
-                <div><h2>Đã Phân Loại <% out.print(tk.DaPhanLoai); %></h2></div>
-                <div><h2>Chưa Phân Loại <% out.print(tk.ChuaPhanLoai); %></h2></div>
-            </div>
+        
+                <div id="chart"></div>
+
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+                <script type="text/javascript">
+                // Load google charts
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+
+                // Draw the chart and set the chart values
+                function drawChart() {
+                  var data = google.visualization.arrayToDataTable([
+                  ['Task', 'Number'],
+                  ['Số lượng kiến nghị', <%=tk.SoLuong %>],
+                  ['Đã trả lời', <%=tk.DaTraLoi %>],
+                  ['Chưa trả lời', <%=tk.ChuaTraLoi %>],
+                  ['Các loại kiến nghị', <%=tk.CacLoai %>],
+                  ['Đã phân loại', <%=tk.DaPhanLoai %>],
+                  ['Chưa phân loại', <%=tk.ChuaPhanLoai %>]
+                ]);
+
+                  // Optional; add a title and set the width and height of the chart
+                  var options = {'title':'My Average Day', 'width':550, 'height':400};
+
+                  // Display the chart inside the <div> element with id="piechart"
+                  var chart = new google.visualization.BarChart(document.getElementById('chart'));
+                  chart.draw(data, options);
+                }
+                </script>
     </div>
 </div>
     </body>
