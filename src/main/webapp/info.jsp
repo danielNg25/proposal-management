@@ -10,7 +10,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>         
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <link type="text/css" rel="stylesheet" href="common/admin.css">
@@ -49,7 +52,7 @@
                     <div class="button">
                         
                     </div>
-
+                    <form action="gopKienNghi" method="post">
                     <table class="table table-hover table-bordered">
                         <thead class="thead-light">
                             <tr>
@@ -58,13 +61,17 @@
                                 <th scope="col">Phân loại</th>
                                 <th scope="col">Ngày phản ánh</th>
                                 <th scope="col">Trạng thái</th>
+                                <th scope="col"></th>
                                 <!--                            <th scope="col">ID người gửi</th>-->
                             </tr>
                         </thead>
                         <tbody>
+                        
                             <% for (int i = 0; i < n; i++) {
                                     String href = "#" + "toggle" + i;
                                     String id = "toggle" + i;
+                                    int name = listKienNghi.get(i).getMaKienNghi();
+                                    String checkboxID = "customCheck" + Integer.toString(i);
                             %>
 
                             <tr>
@@ -76,10 +83,16 @@
                                 <td><%=listKienNghi.get(i).getPhanLoai()%></td>
                                 <td><%=listKienNghi.get(i).getNgayPhanAnh()%></td>
                                 <td><%=listKienNghi.get(i).getTrangThai()%></td>
+                                <td>
+                                    <div class="custom-control custom-checkbox mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="<%=checkboxID %>" name="<%=name %>">
+                                        <label class="custom-control-label" for="<%=checkboxID %>"></label>
+                                    </div>
+                                </td>
                             </tr>
                             <tr class="hide-table-padding">
                                 <td></td>
-                                <td colspan="4">
+                                <td colspan="5">
                                     <div id="<%=id%>" class="collapse in p-3">
                                         <div class="row">
                                             <h5>Nội dung kiến nghị:</h5>
@@ -90,8 +103,17 @@
                                     </div></td>
                             </tr>
                             <% }%>
+                        
                         </tbody>
-                    </table></div>
+                    </table>
+                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Gộp</button>
+                    <div id="demo" class="collapse">
+                        <input type="text" name="tieuDeGop">
+                        <input type="text" name="noiDungGop">
+                        <input type="submit" value="Submit">
+                    </div>
+                    </form>
+                </div>
             </div>
         </div>
 
