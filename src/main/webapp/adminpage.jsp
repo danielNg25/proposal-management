@@ -4,6 +4,7 @@
     Author     : MSI GV62
 --%>
 
+<%@page import="models.ThongKe"%>
 <%@page import="services.ThongKeService"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,7 +24,7 @@
     </head>
     <body>
         <% 
-        ThongKeService tk = new ThongKeService();
+        ThongKe tk = ThongKeService.getInfo();
         %>
         <div class="wrapper">
             <div class="sidebar">
@@ -57,12 +58,12 @@
                 function drawChart() {
                   var data = google.visualization.arrayToDataTable([
                   ['Task', 'Number'],
-                  ['Số lượng kiến nghị', <%=tk.SoLuong %>],
-                  ['Đã trả lời', <%=tk.DaTraLoi %>],
-                  ['Chưa trả lời', <%=tk.ChuaTraLoi %>],
-                  ['Các loại kiến nghị', <%=tk.CacLoai %>],
-                  ['Đã phân loại', <%=tk.DaPhanLoai %>],
-                  ['Chưa phân loại', <%=tk.ChuaPhanLoai %>]
+                  ['Số lượng kiến nghị', <%=tk.getSoLuong() %>],
+                  ['Đã trả lời', <%=tk.getDaTraLoi() %>],
+                  ['Chưa trả lời', <%=tk.getChuaTraLoi() %>],
+                  ['Các loại kiến nghị', <%=tk.getCacLoai() %>],
+                  ['Đã phân loại', <%=tk.getDaPhanLoai() %>],
+                  ['Chưa phân loại', <%=tk.getChuaPhanLoai() %>]
                 ]);
 
                   // Optional; add a title and set the width and height of the chart
