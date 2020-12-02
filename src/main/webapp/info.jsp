@@ -46,25 +46,59 @@
             <div class="main_content">
                 <div>
                     <%
+
                         List<KienNghi> listKienNghi = (List<KienNghi>) request.getAttribute("listKN");
                         int n = listKienNghi.size();
+                        if (request.getParameter("type") != null) {
+                            listKienNghi = (List<KienNghi>) request.getAttribute("listKN1");
+                            n = listKienNghi.size();
+                        }
                     %>
                     <div class="button">
 
                     </div>
-                    <form action="gopKienNghi" method="post">
-                        <table class="table table-hover table-bordered">
+
+                    <table class="table table-hover table-bordered">
+                        <form action="quanly_sapxep" method="post">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 2%"></th>
                                     <th scope="col">Tiêu đề</th>
-                                    <th scope="col">Phân loại</th>
-                                    <th scope="col">Ngày phản ánh</th>
-                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">                                      
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Phân loại
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <input class="dropdown-item" type="submit" value="Tất cả" name="PhanLoai">
+                                                <input class="dropdown-item" type="submit" value="Chính sách" name="PhanLoai">
+                                                <input class="dropdown-item" type="submit" value="Đất đai" name="PhanLoai">
+                                                <input class="dropdown-item" type="submit" value="Y tế" name="PhanLoai">
+                                            </div>
+                                        </div>            
+                                    </th>
+                                    <th scope="col"><div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Ngày phản ánh
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <input class="dropdown-item" type="submit" value="Mới nhất" name="Ngay">
+                                                <input class="dropdown-item" type="submit" value="Cũ nhất" name="Ngay">
+                                            </div>
+                                        </div></th>
+                                    <th scope="col"><div class="dropdown">
+                                            <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Trạng thái
+                                            </button>
+                                            
+                                        </div></th>
                                     <th scope="col"></th>
                                     <!--                            <th scope="col">ID người gửi</th>-->
                                 </tr>
                             </thead>
+                        </form>
+
+                        <form action="gopKienNghi" method="post">
                             <tbody>
 
                                 <% for (int i = 0; i < n; i++) {
@@ -105,41 +139,41 @@
                                 <% }%>
 
                             </tbody>
-                        </table>
-                        <!-- Button trigger modal -->
-                        <div class="row">
-                            <button type="button" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#exampleModalCenter">
-                                Gộp
-                            </button>
+                    </table>
+                    <!-- Button trigger modal -->
+                    <div class="row">
+                        <button type="button" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#exampleModalCenter">
+                            Gộp
+                        </button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Gộp kiến nghị đã chọn</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Gộp kiến nghị đã chọn</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="inputTieuDe">Tiêu đề gộp</label>
+                                            <input type="text" class="form-control" id="inputTieuDe" name="tieuDeGop">
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="inputTieuDe">Tiêu đề gộp</label>
-                                                <input type="text" class="form-control" id="inputTieuDe" name="tieuDeGop">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputNoiDung">Nội dung gộp</label>
-                                                <textarea class="form-control" id="inputNoiDung" rows="5" name="noiDungGop"></textarea> 
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="inputNoiDung">Nội dung gộp</label>
+                                            <textarea class="form-control" id="inputNoiDung" rows="5" name="noiDungGop"></textarea> 
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                            <button type="submit" class="btn btn-primary">Đồng ý</button>
-                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        <button type="submit" class="btn btn-primary">Đồng ý</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </form>
                 </div>
             </div>
