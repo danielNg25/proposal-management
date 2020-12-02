@@ -5,7 +5,7 @@
  */
 package models;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -16,11 +16,11 @@ public class KienNghi {
     private String tieuDe;
     private String phanLoai;
     private int nguoigui_id;
-    private Date ngayPhanAnh;
+    private java.sql.Date ngayPhanAnh;
     private String noiDung;
     private String trangThai;
 
-    public KienNghi(int maKienNghi, String tieuDe, String phanLoai, int nguoigui_id, Date ngayPhanAnh, String noiDung, String trangThai) {
+    public KienNghi(int maKienNghi, String tieuDe, String phanLoai, int nguoigui_id, java.sql.Date ngayPhanAnh, String noiDung, String trangThai) {
         this.maKienNghi = maKienNghi;
         this.tieuDe = tieuDe;
         this.phanLoai = phanLoai;
@@ -70,11 +70,11 @@ public class KienNghi {
         this.nguoigui_id = nguoigui_id;
     }
 
-    public Date getNgayPhanAnh() {
+    public java.sql.Date getNgayPhanAnh() {
         return ngayPhanAnh;
     }
 
-    public void setNgayPhanAnh(Date ngayPhanAnh) {
+    public void setNgayPhanAnh(java.sql.Date ngayPhanAnh) {
         this.ngayPhanAnh = ngayPhanAnh;
     }
 

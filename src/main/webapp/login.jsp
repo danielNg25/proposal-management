@@ -27,7 +27,7 @@
                     <form action="login">
                     <div class="form-group">
                       <input type="text" class="form-control" id="email" placeholder="User Name" name="username">
-                   </div>
+                    </div>
                     <div class="form-group">
                        <input type="password" class="form-control" id="email" placeholder="Password" name="password">
                     </div>

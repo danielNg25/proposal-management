@@ -41,6 +41,10 @@
         <servlet-name>SapXepController</servlet-name>
         <servlet-class>controllers.SapXepController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GopKienNghiController</servlet-name>
+        <servlet-class>controllers.GopKienNghiController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -60,6 +64,10 @@
     <servlet-mapping>
         <servlet-name>SapXepController</servlet-name>
         <url-pattern>/quanly_sapxep</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GopKienNghiController</servlet-name>
+        <url-pattern>/gopKienNghi</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

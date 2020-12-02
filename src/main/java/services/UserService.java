@@ -9,6 +9,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.User;
 
 /**
@@ -26,7 +30,7 @@ public class UserService {
         while (rs.next()) {
             if (rs.getString("password").equals(password)) {
                 if (rs.getString("role").equals("admin")) return 0;
-                    else return rs.getInt("id");
+                else return rs.getInt("id");
             }
         }
         conn.close();
@@ -35,5 +39,8 @@ public class UserService {
     
     public static User getUser() {
         return null;
+    }
+    
+    public static void main(String[] args) {
     }
 }

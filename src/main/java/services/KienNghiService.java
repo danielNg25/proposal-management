@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,7 +78,7 @@ public class KienNghiService {
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, kienNghi.getTieuDe());
         ps.setInt(2, kienNghi.getNguoigui_id());
-        ps.setDate(3, (java.sql.Date) kienNghi.getNgayPhanAnh());
+        ps.setDate(3, kienNghi.getNgayPhanAnh());
         ps.setString(4, kienNghi.getNoiDung());
         ps.setString(5, kienNghi.getTrangThai());
         ps.setString(6, kienNghi.getPhanLoai());

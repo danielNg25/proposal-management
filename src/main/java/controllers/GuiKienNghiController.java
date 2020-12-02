@@ -58,6 +58,7 @@ public class GuiKienNghiController extends HttpServlet {
             kn.setNgayPhanAnh(ngayPhanAnh);
             kn.setTrangThai(trangThai);
             kn.setPhanLoai(phanLoai);
+            kn.setNguoigui_id(0);
             KienNghiService.GuiKienNghi(kn);
             request.getRequestDispatcher("userpage.jsp").forward(request, response);
         } catch (SQLException ex) {

@@ -57,9 +57,9 @@
                     <div class="button">
 
                     </div>
-
-                    <table class="table table-hover table-bordered">
-                        <form action="quanly_sapxep" method="post">
+                    <form action="gopKienNghi" method="post">
+                        <!--<form action="quanly_sapxep" method="post">-->
+                        <table id="kienNghiTable" class="table table-hover table-bordered">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 2%"></th>
@@ -90,28 +90,26 @@
                                             <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Trạng thái
                                             </button>
-                                            
+
                                         </div></th>
                                     <th scope="col"></th>
-                                    <!--                            <th scope="col">ID người gửi</th>-->
                                 </tr>
                             </thead>
-                        </form>
+                            <!--</form>-->
 
-                        <form action="gopKienNghi" method="post">
                             <tbody>
 
                                 <% for (int i = 0; i < n; i++) {
-                                        String href = "#" + "toggle" + i;
-                                        String id = "toggle" + i;
-                                        int name = listKienNghi.get(i).getMaKienNghi();
+                                        String hrefToggleId = "#" + "toggle" + i;
+                                        String toggleId = "toggle" + i;
+                                        int id = listKienNghi.get(i).getMaKienNghi();
                                         String checkboxID = "customCheck" + Integer.toString(i);
                                 %>
 
                                 <tr>
                                     <td>
                                         <span style="cursor: pointer;" class="accordion-toggle collapsed"
-                                              data-toggle="collapse" href="<%=href%>">+</span>
+                                              data-toggle="collapse" href="<%=hrefToggleId%>">+</span>
                                     </td>
                                     <td><%=listKienNghi.get(i).getTieuDe()%></td>
                                     <td><%=listKienNghi.get(i).getPhanLoai()%></td>
@@ -119,7 +117,8 @@
                                     <td><%=listKienNghi.get(i).getTrangThai()%></td>
                                     <td>
                                         <div class="custom-control custom-checkbox mb-3">
-                                            <input type="checkbox" class="custom-control-input" id="<%=checkboxID%>" name="<%=name%>">
+                                            <input type="checkbox" class="custom-control-input" id="<%=checkboxID%>" name="selectedKN"
+                                                   value="<%=id%>">
                                             <label class="custom-control-label" for="<%=checkboxID%>"></label>
                                         </div>
                                     </td>
@@ -127,7 +126,7 @@
                                 <tr class="hide-table-padding">
                                     <td></td>
                                     <td colspan="5">
-                                        <div id="<%=id%>" class="collapse in p-3">
+                                        <div id="<%=toggleId%>" class="collapse in p-3">
                                             <div class="row">
                                                 <h5>Nội dung kiến nghị:</h5>
                                             </div>
@@ -139,41 +138,57 @@
                                 <% }%>
 
                             </tbody>
-                    </table>
-                    <!-- Button trigger modal -->
-                    <div class="row">
-                        <button type="button" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#exampleModalCenter">
-                            Gộp
-                        </button>
+                        </table>
+                        <!-- Button trigger modal -->
+                        <div class="row justify-content-center">
+                        <%
+                            String err = request.getParameter("err");
+                            if ("1".equals(err)) {
+                                out.print("<h5 style=\"color: red;\">Chưa chọn kiến nghị!</h5>");
+                            }
+                            else if ("2".equals(err)) {
+                                out.print("<h5 style=\"color: red;\">Chưa chọn kiến nghị!</h5>");
+                            }
+                                
+                            String message = request.getParameter("mes");
+                            if ("success".equals(message)) {
+                                out.print("<h5 style=\"color: green;\">Gộp thành công!</h5>");
+                            }
+                        %>
+                        </div>
+                        <div class="row">
+                            <button id="gop" type="button" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#exampleModalCenter">
+                                Gộp
+                            </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Gộp kiến nghị đã chọn</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="inputTieuDe">Tiêu đề gộp</label>
-                                            <input type="text" class="form-control" id="inputTieuDe" name="tieuDeGop">
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Gộp kiến nghị đã chọn</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="inputNoiDung">Nội dung gộp</label>
-                                            <textarea class="form-control" id="inputNoiDung" rows="5" name="noiDungGop"></textarea> 
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="inputTieuDe">Tiêu đề gộp</label>
+                                                <input type="text" class="form-control" id="inputTieuDe" name="tieuDeGop">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputNoiDung">Nội dung gộp</label>
+                                                <textarea class="form-control" id="inputNoiDung" rows="5" name="noiDungGop"></textarea> 
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                        <button type="submit" class="btn btn-primary">Đồng ý</button>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                            <button type="submit" class="btn btn-primary">Đồng ý</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </form>
                 </div>
             </div>
