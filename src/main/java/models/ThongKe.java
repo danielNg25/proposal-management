@@ -32,17 +32,15 @@ public class ThongKe {
     public static int DaPhanLoai;   
     public static int ChuaPhanLoai;
     
-    public ThongKe(int SoLuong, int DaTraLoi,int ChuaTraLoi, int CacLoai,int DaPhanLoai,int ChuaPhanLoai){
-        this.SoLuong = SoLuong;
-        this.DaTraLoi = DaTraLoi;
-        this.ChuaTraLoi = ChuaTraLoi;
-        this.CacLoai = CacLoai;
-        this.DaPhanLoai = DaPhanLoai;
-        this.ChuaPhanLoai = ChuaPhanLoai;
+    public ThongKe(){
+        SoLuong = 0;
+        DaPhanLoai = 0;
+        DaTraLoi = 0;
+        CacLoai = 0;
+        ChuaPhanLoai = 0;
+        ChuaTraLoi = 0;
     }
     
-    public ThongKe(){
-    }
     
     public int getSoLuong(){
         return SoLuong;
