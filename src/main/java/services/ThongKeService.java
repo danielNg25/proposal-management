@@ -9,33 +9,25 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import models.ThongKe;
 
 /**
  *
  * @author MSI GV62
  */
 public class ThongKeService {
-    public static int SoLuong;
-    public static int DaTraLoi;
-    public static int ChuaTraLoi;
-    public static int CacLoai;
-    public static int DaPhanLoai;   
-    public static int ChuaPhanLoai;
-    public ThongKeService() throws SQLException, ClassNotFoundException {
-        SoLuong = 0;
-        DaPhanLoai = 0;
-        DaTraLoi = 0;
-        CacLoai = 0;
-        ChuaPhanLoai = 0;
-        ChuaTraLoi = 0;
+    public static ThongKe getInfo() throws SQLException, ClassNotFoundException {
         Connection conn = MySqlConnection.getMySqlConnection();
-        getInfo(conn);
-    }
-    public static void getInfo(Connection conn) throws SQLException, ClassNotFoundException {
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM kien_nghi");
         Statement st1 = conn.createStatement();
         ResultSet rs1 = st1.executeQuery("SELECT DISTINCT phanLoai FROM kien_nghi");
+        int CacLoai = 0;
+        int SoLuong = 0;
+        int ChuaTraLoi = 0;
+        int DaPhanLoai = 0;
+        int DaTraLoi;
+        int ChuaPhanLoai;
         while(rs1.next()) {
             CacLoai++;
         }
@@ -48,11 +40,9 @@ public class ThongKeService {
         }
         DaTraLoi = SoLuong - ChuaTraLoi;
         ChuaPhanLoai = SoLuong - DaPhanLoai;
-        rs.close();
-    }
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        ThongKeService tk = new ThongKeService();
-        System.out.println(tk.SoLuong);
+        ThongKe tk = new ThongKe(SoLuong, DaTraLoi, ChuaTraLoi, CacLoai, DaPhanLoai, ChuaPhanLoai);
+        conn.close();
+        return tk;
     }
 }
     

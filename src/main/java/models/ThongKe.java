@@ -25,12 +25,12 @@ public class ThongKe {
  * @author MSI GV62
  */
 
-    public static int SoLuong;
-    public static int DaTraLoi;
-    public static int ChuaTraLoi;
-    public static int CacLoai;
-    public static int DaPhanLoai;   
-    public static int ChuaPhanLoai;
+    private int SoLuong;
+    private int DaTraLoi;
+    private int ChuaTraLoi;
+    private int CacLoai;
+    private int DaPhanLoai;   
+    private int ChuaPhanLoai;
     
     public ThongKe(){
         SoLuong = 0;
@@ -39,6 +39,15 @@ public class ThongKe {
         CacLoai = 0;
         ChuaPhanLoai = 0;
         ChuaTraLoi = 0;
+    }
+    
+    public ThongKe(int SoLuong, int DaTraLoi, int ChuaTraLoi, int CacLoai, int DaPhanLoai, int ChuaPhanLoai){
+        this.SoLuong = SoLuong;
+        this.DaTraLoi = DaTraLoi;
+        this.ChuaTraLoi = ChuaTraLoi;
+        this.CacLoai = CacLoai;
+        this.DaPhanLoai = DaPhanLoai;
+        this.ChuaPhanLoai = ChuaPhanLoai;
     }
     
     
