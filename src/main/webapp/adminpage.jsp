@@ -59,6 +59,33 @@
               
             
                 <div id="chart"></div>
+              
+
+                <script type="text/javascript">
+                // Load google charts
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+
+                // Draw the chart and set the chart values
+                function drawChart() {
+        
+                 var data = google.visualization.arrayToDataTable([
+                  ['Task', 'Number'],
+                  ['Số lượng kiến nghị', <%=tk.getSoLuong() %>],
+                  ['Đã trả lời', <%=tk.getDaTraLoi() %>],
+                  ['Chưa trả lời', <%=tk.getChuaTraLoi() %>],
+                  ['Các loại kiến nghị', <%=tk.getCacLoai() %>],
+                  ['Đã phân loại', <%=tk.getDaPhanLoai() %>],
+                  ['Chưa phân loại', <%=tk.getChuaPhanLoai() %>]
+                ]); 
+
+                  // Optional; add a title and set the width and height of the chart
+                  var options = {'title':'Thống kê cả năm', 'width':900, 'height':700};
+
+                  var chart = new google.visualization.BarChart(document.getElementById('chart'));
+                  chart.draw(data, options);
+                }
+                </script>
            
                 <script>
                 // Load google charts
