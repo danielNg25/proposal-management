@@ -19,8 +19,9 @@ public class KienNghi {
     private java.sql.Date ngayPhanAnh;
     private String noiDung;
     private String trangThai;
+    private int  kien_nghi_gop_id;
 
-    public KienNghi(int maKienNghi, String tieuDe, String phanLoai, int nguoigui_id, java.sql.Date ngayPhanAnh, String noiDung, String trangThai) {
+    public KienNghi(int maKienNghi, String tieuDe, String phanLoai, int nguoigui_id, java.sql.Date ngayPhanAnh, String noiDung, String trangThai, int kien_nghi_gop_id) {
         this.maKienNghi = maKienNghi;
         this.tieuDe = tieuDe;
         this.phanLoai = phanLoai;
@@ -28,6 +29,7 @@ public class KienNghi {
         this.ngayPhanAnh = ngayPhanAnh;
         this.noiDung = noiDung;
         this.trangThai = trangThai;
+        this.kien_nghi_gop_id = kien_nghi_gop_id;
     }
 
     public KienNghi() {
@@ -92,6 +94,14 @@ public class KienNghi {
 
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
+    }
+
+    public int getKien_nghi_gop_id() {
+        return kien_nghi_gop_id;
+    }
+
+    public void setKien_nghi_gop_id(int kien_nghi_gop_id) {
+        this.kien_nghi_gop_id = kien_nghi_gop_id;
     }
     
     public String toString() {

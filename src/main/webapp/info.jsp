@@ -4,6 +4,8 @@
     Author     : ACER
 --%>
 
+<%@page import="models.KienNghiGop"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="models.KienNghi"%>
 <%@page import="models.KienNghi"%>
@@ -11,9 +13,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <link type="text/css" rel="stylesheet" href="common/admin.css">
@@ -44,22 +45,69 @@
                 </div>
             </div>
             <div class="main_content">
-                <div>
-                    <%
+                <%
+                    List<KienNghiGop> listKienNghiGop = (List<KienNghiGop>) request.getAttribute("listKNG");
+                    int i = 0;
+                    List<KienNghi> listKienNghi = (List<KienNghi>) request.getAttribute("listKN");
+                    if (request.getParameter("type") != null) {
+                        listKienNghi = (List<KienNghi>) request.getAttribute("listKN1");
+                    }
+                %>
 
-                        List<KienNghi> listKienNghi = (List<KienNghi>) request.getAttribute("listKN");
-                        int n = listKienNghi.size();
-                        if (request.getParameter("type") != null) {
-                            listKienNghi = (List<KienNghi>) request.getAttribute("listKN1");
-                            n = listKienNghi.size();
-                        }
-                    %>
-                    <div class="button">
+                <form action="gopKienNghi" method="post">
+                    <div>
+                        <table class="table table-hover table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" style="width: 2%"></th>
+                                    <th scope="col">Tiêu đề</th>
+                                    <th scope="col"></th>                                      
+                                    <th scope="col"></th>
+                                    <th scope="col">Số lần phản ánh</th>
+                                    <th scope="col" style="width: 2%"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                    </div>
-                    <form action="gopKienNghi" method="post">
-                        <!--<form action="quanly_sapxep" method="post">-->
-                        <table id="kienNghiTable" class="table table-hover table-bordered">
+                                <% for (KienNghiGop kng : listKienNghiGop) {
+                                        String hrefToggleId = "#" + "toggle" + (++i);
+                                        String toggleId = "toggle" + i;
+                                        int id = kng.getMaKienNghiGop();
+                                        String checkboxID = "customCheck" + Integer.toString(i);
+                                %>
+
+                                <tr>
+                                    <td>
+                                        <span style="cursor: pointer;" class="accordion-toggle collapsed"
+                                              data-toggle="collapse" href="<%=hrefToggleId%>">+</span>
+                                    </td>
+                                    <td><%=kng.getTieuDeGop()%></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><%=kng.getSoLanPA()%></td>
+                                    <td>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="<%=checkboxID%>" name="selectedKNG"
+                                                   value="<%=id%>">
+                                            <label class="custom-control-label" for="<%=checkboxID%>"></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hide-table-padding">
+                                    <td></td>
+                                    <td colspan="5">
+                                        <div id="<%=toggleId%>" class="collapse in p-3">
+                                            <div class="row">
+                                                <h5>Nội dung kiến nghị:</h5>
+                                            </div>
+                                            <div class="row">
+                                                <p><%=kng.getNoiDungGop()%></p>
+                                            </div>
+                                        </div></td>
+                                </tr>
+                                <% }%>
+
+                            </tbody>
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 2%"></th>
@@ -70,10 +118,10 @@
                                                 Phân loại
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <input class="dropdown-item" type="submit" value="Tất cả" name="PhanLoai">
-                                                <input class="dropdown-item" type="submit" value="Chính sách" name="PhanLoai">
-                                                <input class="dropdown-item" type="submit" value="Đất đai" name="PhanLoai">
-                                                <input class="dropdown-item" type="submit" value="Y tế" name="PhanLoai">
+                                                <button class="dropdown-item" type="submit" value="Tất cả" name="PhanLoai" formaction="quanly_sapxep">Tất cả</button>
+                                                <button class="dropdown-item" type="submit" value="Chính sách" name="PhanLoai" formaction="quanly_sapxep">Chính sách</button>
+                                                <button class="dropdown-item" type="submit" value="Đất đai" name="PhanLoai" formaction="quanly_sapxep">Đất Đai</button>
+                                                <button class="dropdown-item" type="submit" value="Y tế" name="PhanLoai" formaction="quanly_sapxep">Y tế</button>
                                             </div>
                                         </div>            
                                     </th>
@@ -82,28 +130,28 @@
                                                 Ngày phản ánh
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <input class="dropdown-item" type="submit" value="Mới nhất" name="Ngay">
-                                                <input class="dropdown-item" type="submit" value="Cũ nhất" name="Ngay">
+                                                <button class="dropdown-item" type="submit" value="Mới nhất" name="Ngay" formaction="quanly_sapxep">Mới nhất</button>
+                                                <button class="dropdown-item" type="submit" value="Cũ nhất" name="Ngay" formaction="quanly_sapxep">Cũ nhất</button>
                                             </div>
                                         </div></th>
-                                    <th scope="col"><div class="dropdown">
-                                            <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Trạng thái
-                                            </button>
+                                    <th scope="col">
+                                        Trạng thái
+                                        </button>
 
                                         </div></th>
-                                    <th scope="col"></th>
+                                    <th scope="col" style="width: 2%"></th>
                                 </tr>
                             </thead>
                             <!--</form>-->
 
                             <tbody>
 
-                                <% for (int i = 0; i < n; i++) {
-                                        String hrefToggleId = "#" + "toggle" + i;
-                                        String toggleId = "toggle" + i;
-                                        int id = listKienNghi.get(i).getMaKienNghi();
-                                        String checkboxID = "customCheck" + Integer.toString(i);
+                                <% for (KienNghi kn : listKienNghi) {
+                                        if (kn.getKien_nghi_gop_id() == 0) {
+                                            String hrefToggleId = "#" + "toggle" + (++i);
+                                            String toggleId = "toggle" + i;
+                                            int id = kn.getMaKienNghi();
+                                            String checkboxID = "customCheck" + Integer.toString(i);
                                 %>
 
                                 <tr>
@@ -111,10 +159,10 @@
                                         <span style="cursor: pointer;" class="accordion-toggle collapsed"
                                               data-toggle="collapse" href="<%=hrefToggleId%>">+</span>
                                     </td>
-                                    <td><%=listKienNghi.get(i).getTieuDe()%></td>
-                                    <td><%=listKienNghi.get(i).getPhanLoai()%></td>
-                                    <td><%=listKienNghi.get(i).getNgayPhanAnh()%></td>
-                                    <td><%=listKienNghi.get(i).getTrangThai()%></td>
+                                    <td><%=kn.getTieuDe()%></td>
+                                    <td><%=kn.getPhanLoai()%></td>
+                                    <td><%=kn.getNgayPhanAnh()%></td>
+                                    <td><%=kn.getTrangThai()%></td>
                                     <td>
                                         <div class="custom-control custom-checkbox mb-3">
                                             <input type="checkbox" class="custom-control-input" id="<%=checkboxID%>" name="selectedKN"
@@ -131,66 +179,66 @@
                                                 <h5>Nội dung kiến nghị:</h5>
                                             </div>
                                             <div class="row">
-                                                <p><%=listKienNghi.get(i).getNoiDung()%></p>
+                                                <p><%=kn.getNoiDung()%></p>
                                             </div>
                                         </div></td>
                                 </tr>
-                                <% }%>
+                                <%      }
+                                    }
+                                %>
 
                             </tbody>
-                        </table>
-                        <!-- Button trigger modal -->
-                        <div class="row justify-content-center">
+                        </table></div>
+                    <!-- Button trigger modal -->
+                    <div class="row justify-content-center">
                         <%
                             String err = request.getParameter("err");
                             if ("1".equals(err)) {
                                 out.print("<h5 style=\"color: red;\">Chưa chọn kiến nghị!</h5>");
-                            }
-                            else if ("2".equals(err)) {
+                            } else if ("2".equals(err)) {
                                 out.print("<h5 style=\"color: red;\">Chưa chọn kiến nghị!</h5>");
                             }
-                                
+
                             String message = request.getParameter("mes");
                             if ("success".equals(message)) {
                                 out.print("<h5 style=\"color: green;\">Gộp thành công!</h5>");
                             }
                         %>
-                        </div>
-                        <div class="row">
-                            <button id="gop" type="button" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#exampleModalCenter">
-                                Gộp
-                            </button>
+                    </div>
+                    <div class="row">
+                        <button id="gop" type="button" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#exampleModalCenter">
+                            Gộp
+                        </button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Gộp kiến nghị đã chọn</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Gộp kiến nghị đã chọn</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="inputTieuDe">Tiêu đề gộp</label>
+                                            <input type="text" class="form-control" id="inputTieuDe" name="tieuDeGop">
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="inputTieuDe">Tiêu đề gộp</label>
-                                                <input type="text" class="form-control" id="inputTieuDe" name="tieuDeGop">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputNoiDung">Nội dung gộp</label>
-                                                <textarea class="form-control" id="inputNoiDung" rows="5" name="noiDungGop"></textarea> 
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="inputNoiDung">Nội dung gộp</label>
+                                            <textarea class="form-control" id="inputNoiDung" rows="5" name="noiDungGop"></textarea> 
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                            <button type="submit" class="btn btn-primary">Đồng ý</button>
-                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        <button type="submit" class="btn btn-primary">Đồng ý</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </body>
