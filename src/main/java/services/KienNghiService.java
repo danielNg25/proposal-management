@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.KienNghi;
+import models.KienNghiGop;
 
 /**
  *
@@ -94,12 +95,34 @@ public class KienNghiService {
         conn.close();
     }
     
+    public static List<KienNghiGop> getKienNghiGop() throws SQLException, ClassNotFoundException{
+        Connection conn = MySqlConnection.getMySqlConnection();
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM kien_nghi_gop");
+        if (rs == null) {
+            return null;
+        }
+        List<KienNghiGop> listKienNghiGop = new ArrayList<KienNghiGop>();
+        while(rs.next()) {
+            KienNghiGop kng = new KienNghiGop();
+            kng.setTieuDeGop(rs.getString("tieuDeGop"));
+            kng.setNoiDungGop(rs.getString("noiDungGop"));
+            kng.setSoLanPA(rs.getInt("soLanPA"));
+            kng.setMaKienNghiGop(rs.getInt("id"));
+            listKienNghiGop.add(kng);
+        }
+        conn.close();
+        return listKienNghiGop;
+    }
+    
     
     public static void main(String[] args) {
         try {
-            KienNghi kienNghi = getKienNghi(1);
-            System.out.println(kienNghi);
-            GuiKienNghi(kienNghi);
+             List<KienNghiGop> listKienNghiGop = new ArrayList<KienNghiGop>();
+             listKienNghiGop = getKienNghiGop();
+            for (KienNghiGop kng : listKienNghiGop ) {
+                System.out.println(kng.getMaKienNghiGop() + " " + kng.getTieuDeGop() + " " + kng.getNoiDungGop() + " " + kng.getSoLanPA());
+            }
         } catch (SQLException ex) {
             Logger.getLogger(KienNghiService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.KienNghi;
+import models.KienNghiGop;
 import services.KienNghiService;
 
 /**
@@ -39,7 +40,8 @@ public class KienNghiController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             List<KienNghi> listKienNghi = KienNghiService.getKienNghi();
-            
+            List<KienNghiGop> listKienNghiGop = KienNghiService.getKienNghiGop();
+            request.setAttribute("listKNG", listKienNghiGop);
             request.setAttribute("listKN", listKienNghi);
             request.getRequestDispatcher("info.jsp").forward(request, response);
             

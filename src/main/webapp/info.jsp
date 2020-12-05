@@ -4,6 +4,8 @@
     Author     : ACER
 --%>
 
+<%@page import="models.KienNghiGop"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="models.KienNghi"%>
 <%@page import="models.KienNghi"%>
@@ -44,19 +46,68 @@
             </div>
             <div class="main_content">
                 <%
-
+                    List<KienNghiGop> listKienNghiGop = (List<KienNghiGop>) request.getAttribute("listKNG");
+                    int i=0;
                     List<KienNghi> listKienNghi = (List<KienNghi>) request.getAttribute("listKN");
-                    int n = listKienNghi.size();
                     if (request.getParameter("type") != null) {
                         listKienNghi = (List<KienNghi>) request.getAttribute("listKN1");
-                        n = listKienNghi.size();
                     }
                 %>
 
                 <form action="gopKienNghi" method="post">
                     <div>
-                        <!--<form action="quanly_sapxep" method="post">-->
                         <table class="table table-hover table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" style="width: 2%"></th>
+                                    <th scope="col">Tiêu đề</th>
+                                    <th scope="col"></th>                                      
+                                    <th scope="col"></th>
+                                    <th scope="col">Số lần phản ánh</th>
+                                    <th scope="col" style="width: 2%"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <% for (KienNghiGop kng : listKienNghiGop) {
+                                        String hrefToggleId = "#" + "toggle" + (++i);
+                                        String toggleId = "toggle" + i;
+                                        int id = kng.getMaKienNghiGop();
+                                        String checkboxID = "customCheck" + Integer.toString(i);
+                                %>
+
+                                <tr>
+                                    <td>
+                                        <span style="cursor: pointer;" class="accordion-toggle collapsed"
+                                              data-toggle="collapse" href="<%=hrefToggleId%>">+</span>
+                                    </td>
+                                    <td><%=kng.getTieuDeGop()%></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><%=kng.getSoLanPA() %></td>
+                                    <td>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="<%=checkboxID%>" name="selectedKNG"
+                                                   value="<%=id%>">
+                                            <label class="custom-control-label" for="<%=checkboxID%>"></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hide-table-padding">
+                                    <td></td>
+                                    <td colspan="5">
+                                        <div id="<%=toggleId%>" class="collapse in p-3">
+                                            <div class="row">
+                                                <h5>Nội dung kiến nghị:</h5>
+                                            </div>
+                                            <div class="row">
+                                                <p><%=kng.getNoiDungGop()%></p>
+                                            </div>
+                                        </div></td>
+                                </tr>
+                                <% }%>
+
+                            </tbody>
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 2%"></th>
@@ -95,10 +146,10 @@
 
                             <tbody>
 
-                                <% for (int i = 0; i < n; i++) {
-                                        String hrefToggleId = "#" + "toggle" + i;
+                                <% for (KienNghi kn : listKienNghi) {
+                                        String hrefToggleId = "#" + "toggle" + (++i);
                                         String toggleId = "toggle" + i;
-                                        int id = listKienNghi.get(i).getMaKienNghi();
+                                        int id = kn.getMaKienNghi();
                                         String checkboxID = "customCheck" + Integer.toString(i);
                                 %>
 
@@ -107,10 +158,10 @@
                                         <span style="cursor: pointer;" class="accordion-toggle collapsed"
                                               data-toggle="collapse" href="<%=hrefToggleId%>">+</span>
                                     </td>
-                                    <td><%=listKienNghi.get(i).getTieuDe()%></td>
-                                    <td><%=listKienNghi.get(i).getPhanLoai()%></td>
-                                    <td><%=listKienNghi.get(i).getNgayPhanAnh()%></td>
-                                    <td><%=listKienNghi.get(i).getTrangThai()%></td>
+                                    <td><%=kn.getTieuDe()%></td>
+                                    <td><%=kn.getPhanLoai()%></td>
+                                    <td><%=kn.getNgayPhanAnh()%></td>
+                                    <td><%=kn.getTrangThai()%></td>
                                     <td>
                                         <div class="custom-control custom-checkbox mb-3">
                                             <input type="checkbox" class="custom-control-input" id="<%=checkboxID%>" name="selectedKN"
@@ -121,13 +172,13 @@
                                 </tr>
                                 <tr class="hide-table-padding">
                                     <td></td>
-                                    <td colspan="4">
+                                    <td colspan="5">
                                         <div id="<%=toggleId%>" class="collapse in p-3">
                                             <div class="row">
                                                 <h5>Nội dung kiến nghị:</h5>
                                             </div>
                                             <div class="row">
-                                                <p><%=listKienNghi.get(i).getNoiDung()%></p>
+                                                <p><%=kn.getNoiDung()%></p>
                                             </div>
                                         </div></td>
                                 </tr>
