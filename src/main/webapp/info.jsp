@@ -47,7 +47,7 @@
             <div class="main_content">
                 <%
                     List<KienNghiGop> listKienNghiGop = (List<KienNghiGop>) request.getAttribute("listKNG");
-                    int i=0;
+                    int i = 0;
                     List<KienNghi> listKienNghi = (List<KienNghi>) request.getAttribute("listKN");
                     if (request.getParameter("type") != null) {
                         listKienNghi = (List<KienNghi>) request.getAttribute("listKN1");
@@ -84,7 +84,7 @@
                                     <td><%=kng.getTieuDeGop()%></td>
                                     <td></td>
                                     <td></td>
-                                    <td><%=kng.getSoLanPA() %></td>
+                                    <td><%=kng.getSoLanPA()%></td>
                                     <td>
                                         <div class="custom-control custom-checkbox mb-3">
                                             <input type="checkbox" class="custom-control-input" id="<%=checkboxID%>" name="selectedKNG"
@@ -147,10 +147,11 @@
                             <tbody>
 
                                 <% for (KienNghi kn : listKienNghi) {
-                                        String hrefToggleId = "#" + "toggle" + (++i);
-                                        String toggleId = "toggle" + i;
-                                        int id = kn.getMaKienNghi();
-                                        String checkboxID = "customCheck" + Integer.toString(i);
+                                        if (kn.getKien_nghi_gop_id() == 0) {
+                                            String hrefToggleId = "#" + "toggle" + (++i);
+                                            String toggleId = "toggle" + i;
+                                            int id = kn.getMaKienNghi();
+                                            String checkboxID = "customCheck" + Integer.toString(i);
                                 %>
 
                                 <tr>
@@ -182,7 +183,9 @@
                                             </div>
                                         </div></td>
                                 </tr>
-                                <% }%>
+                                <%      }
+                                    }
+                                %>
 
                             </tbody>
                         </table></div>
