@@ -34,8 +34,7 @@ public class SapXepService {
             String phanLoai = rs.getString("phanLoai");
             String trangThai = rs.getString("trangThai");
             int nguoigui_id = rs.getInt("nguoigui_id");
-            int kien_nghi_gop_id = rs.getInt("kien_nghi_gop_id");
-            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai,kien_nghi_gop_id);
+            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai);
             listKN.add(kienNghi);
         }
         conn = null;
@@ -57,8 +56,7 @@ public class SapXepService {
             String phanLoai = rs.getString("phanLoai");
             String trangThai = rs.getString("trangThai");
             int nguoigui_id = rs.getInt("nguoigui_id");
-            int kien_nghi_gop_id = rs.getInt("kien_nghi_gop_id");
-            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai,kien_nghi_gop_id);
+            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai);
             listKN.add(kienNghi);
         }
         conn = null;
@@ -80,8 +78,7 @@ public class SapXepService {
             String phanLoai = rs.getString("phanLoai");
             String trangThai = rs.getString("trangThai");
             int nguoigui_id = rs.getInt("nguoigui_id");
-            int kien_nghi_gop_id = rs.getInt("kien_nghi_gop_id");
-            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai,kien_nghi_gop_id);
+            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai);
             listKN.add(kienNghi);
         }
         conn = null;
@@ -103,8 +100,7 @@ public class SapXepService {
             String phanLoai = rs.getString("phanLoai");
             String trangThai = rs.getString("trangThai");
             int nguoigui_id = rs.getInt("nguoigui_id");
-            int kien_nghi_gop_id = rs.getInt("kien_nghi_gop_id");
-            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai,kien_nghi_gop_id);
+            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai);
             listKN.add(kienNghi);
         }
         conn = null;
@@ -125,8 +121,7 @@ public class SapXepService {
             String phanLoai = rs.getString("phanLoai");
             String trangThai = rs.getString("trangThai");
             int nguoigui_id = rs.getInt("nguoigui_id");
-            int kien_nghi_gop_id = rs.getInt("kien_nghi_gop_id");
-            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai,kien_nghi_gop_id);
+            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai);
             listKN.add(kienNghi);
         }
         conn = null;
@@ -148,8 +143,7 @@ public class SapXepService {
             String phanLoai = rs.getString("phanLoai");
             String trangThai = rs.getString("trangThai");
             int nguoigui_id = rs.getInt("nguoigui_id");
-            int kien_nghi_gop_id = rs.getInt("kien_nghi_gop_id");
-            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai,kien_nghi_gop_id);
+            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai);
             listKN.add(kienNghi);
         }
         conn = null;

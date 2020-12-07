@@ -47,10 +47,10 @@ public class GopKienNghiController extends HttpServlet {
             } else {
                 int soLanPA = selectedIds.length;
                 KienNghiGop kienNghiGop = new KienNghiGop(tieuDeGop, noiDungGop, soLanPA);
-                int kienNghiGopId = GopKienNghiService.themKienNghiGop(kienNghiGop);
+                int kienNghiGopID = GopKienNghiService.themKienNghiGop(kienNghiGop);
                 for (String strid: selectedIds) {
                     int kienNghiId = Integer.parseInt(strid);  
-                    GopKienNghiService.updateKienNghiGopID(kienNghiGopId, kienNghiId);
+                    GopKienNghiService.updateKienNghiGopID(kienNghiId, kienNghiGopID);
                 }
                 response.sendRedirect("/QuanLyKienNghi/quanly?mes=success");
             }
@@ -101,3 +101,4 @@ public class GopKienNghiController extends HttpServlet {
     }// </editor-fold>
 
 }
+

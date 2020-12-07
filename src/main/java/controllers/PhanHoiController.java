@@ -7,24 +7,18 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.KienNghi;
-import models.KienNghiGop;
-import services.KienNghiService;
 
 /**
  *
  * @author ACER
  */
-
-public class KienNghiController extends HttpServlet {
+@WebServlet(name = "PhanHoiController", urlPatterns = {"/phanhoi"})
+public class PhanHoiController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,20 +32,7 @@ public class KienNghiController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            List<KienNghi> listKienNghi = KienNghiService.getKienNghi();
-            List<KienNghiGop> listKienNghiGop = KienNghiService.getKienNghiGop();
-            List<KienNghi> listKienNghiChuaGop = KienNghiService.getKienNghiChuaGop();
-            request.setAttribute("listKNG", listKienNghiGop);
-            request.setAttribute("listKNCG", listKienNghiChuaGop);
-            request.setAttribute("listKN", listKienNghi);
-            request.getRequestDispatcher("info.jsp").forward(request, response);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(KienNghiController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(KienNghiController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -18,7 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.KienNghi;
+import models.NguoiDan;
 import services.KienNghiService;
+import services.NguoiDanService;
 
 /**
  *
@@ -26,7 +28,6 @@ import services.KienNghiService;
  */
 @WebServlet(name = "GuiKienNghiController", urlPatterns = {"/guikn"})
 public class GuiKienNghiController extends HttpServlet {
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,8 +40,9 @@ public class GuiKienNghiController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
+        try {
+            response.setContentType("text/html;charset=UTF-8");
+            HttpSession session = request.getSession();
             String tieuDe = request.getParameter("tieuDe");
             int nguoigui_id = (int) session.getAttribute("userID");
             long millis = System.currentTimeMillis();
@@ -48,25 +50,35 @@ public class GuiKienNghiController extends HttpServlet {
             String noiDung = request.getParameter("noiDung");
             String trangThai = "chưa trả lời";
             String phanLoai = request.getParameter("phanLoai");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-             
-            KienNghi kn = new KienNghi();
-            kn.setTieuDe(tieuDe);
-            kn.setNguoigui_id(nguoigui_id);
-            kn.setNoiDung(noiDung);
-            kn.setNgayPhanAnh(ngayPhanAnh);
-            kn.setTrangThai(trangThai);
-            kn.setPhanLoai(phanLoai);
-            kn.setNguoigui_id(0);
-            KienNghiService.GuiKienNghi(kn);
-            request.getRequestDispatcher("userpage.jsp").forward(request, response);
+
+            NguoiDan nd = NguoiDanService.getNguoiDan(nguoigui_id);
+            request.setAttribute("nguoiDan", nd);
+            request.setAttribute("hoTen", nd.getHoTen());
+            request.setAttribute("diaChi", nd.getDiaChi());
+            request.setAttribute("sdt", nd.getSoDienThoai());
+            request.setAttribute("email", nd.getEmail());
+            request.setAttribute("gioiTinh", nd.getGioiTinh());
+            request.setAttribute("cmnd", nd.getCmnd());
+
+            if ("".equals(tieuDe) || "".equals(noiDung)) {
+                request.getRequestDispatcher("userpage.jsp?err=1").forward(request, response);
+            } else {
+                KienNghi kn = new KienNghi();
+                kn.setTieuDe(tieuDe);
+                kn.setNguoigui_id(nguoigui_id);
+                kn.setNoiDung(noiDung);
+                kn.setNgayPhanAnh(ngayPhanAnh);
+                kn.setTrangThai(trangThai);
+                kn.setPhanLoai(phanLoai);
+                KienNghiService.GuiKienNghi(kn);
+            }
+            request.getRequestDispatcher("userpage.jsp?mes=success").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(GuiKienNghiController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(GuiKienNghiController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -82,8 +94,9 @@ public class GuiKienNghiController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
     }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -109,4 +122,3 @@ public class GuiKienNghiController extends HttpServlet {
     }// </editor-fold>
 
 }
-
