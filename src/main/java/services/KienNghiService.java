@@ -39,8 +39,7 @@ public class KienNghiService {
             String phanLoai = rs.getString("phanLoai");
             String trangThai = rs.getString("trangThai");
             int nguoigui_id = rs.getInt("nguoigui_id");
-            int kien_nghi_gop_id = rs.getInt("kien_nghi_gop_id");
-            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai, kien_nghi_gop_id);
+            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai);
             return kienNghi;
         }
         conn.close();
@@ -65,8 +64,7 @@ public class KienNghiService {
             String phanLoai = rs.getString("phanLoai");
             String trangThai = rs.getString("trangThai");
             int nguoigui_id = rs.getInt("nguoigui_id");
-            int kien_nghi_gop_id = rs.getInt("kien_nghi_gop_id");
-            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai, kien_nghi_gop_id);
+            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai);
             listKienNghi.add(kienNghi);
         }
         conn.close();
@@ -75,7 +73,7 @@ public class KienNghiService {
 
     public static void GuiKienNghi(KienNghi kienNghi) throws SQLException, ClassNotFoundException {
         Connection conn = MySqlConnection.getMySqlConnection();
-        String sql = "INSERT INTO kien_nghi (tieuDe, nguoigui_id, ngayPhanAnh, noiDung, trangThai, phanLoai) VALUES (?, ?, ?, ?, ?,?)";
+        String sql = "INSERT INTO kien_nghi (tieuDe, nguoigui_id, ngayPhanAnh, noiDung, trangThai, phanLoai) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, kienNghi.getTieuDe());
         ps.setInt(2, kienNghi.getNguoigui_id());
@@ -99,7 +97,7 @@ public class KienNghiService {
         if (rs == null) {
             return null;
         }
-        List<KienNghiGop> listKienNghiGop = new ArrayList<KienNghiGop>();
+        List<KienNghiGop> listKienNghiGop = new ArrayList<>();
         while (rs.next()) {
             KienNghiGop kng = new KienNghiGop();
             kng.setTieuDeGop(rs.getString("tieuDeGop"));
@@ -111,23 +109,44 @@ public class KienNghiService {
         conn.close();
         return listKienNghiGop;
     }
+    
+    public static List<KienNghi> getKienNghiChuaGop() throws SQLException, ClassNotFoundException {
+        Connection conn = MySqlConnection.getMySqlConnection();
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM kien_nghi "
+                + "WHERE kien_nghi.id NOT IN ("
+                + "SELECT kien_nghi_id FROM kn_kng)");
+        if (rs == null) {
+            return null;
+        }
+        List<KienNghi> listKienNghiChuaGop = new ArrayList<>();
+        while (rs.next()) {
+            int maKienNghi = rs.getInt("id");
+            String tieuDe = rs.getString("tieuDe");
+            Date ngayPhanAnh = rs.getDate("ngayPhanAnh");
+            String noiDung = rs.getString("noiDung");
+            String phanLoai = rs.getString("phanLoai");
+            String trangThai = rs.getString("trangThai");
+            int nguoigui_id = rs.getInt("nguoigui_id");
+            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai);
+            listKienNghiChuaGop.add(kienNghi);
+            
+        }
+        conn.close();
+        return listKienNghiChuaGop;
+    }
 
     public static void main(String[] args) {
         try {
-//             List<KienNghiGop> listKienNghiGop = new ArrayList<KienNghiGop>();
-//             listKienNghiGop = getKienNghiGop();
-//            for (KienNghiGop kng : listKienNghiGop ) {
-//                System.out.println(kng.getMaKienNghiGop() + " " + kng.getTieuDeGop() + " " + kng.getNoiDungGop() + " " + kng.getSoLanPA());
-//            }
-            List<KienNghi> listKienNghi = new ArrayList<KienNghi>();
-            listKienNghi = getKienNghi();
-            for (KienNghi kn : listKienNghi) {
-                System.out.println(kn.getMaKienNghi() + " " + kn.getTieuDe() + " " + kn.getNoiDung() + " " + kn.getPhanLoai() + " " + kn.getKien_nghi_gop_id());
-            }
+            List<KienNghi> kncg = getKienNghiChuaGop();
+            kncg.forEach(kn -> {
+                System.out.println(kn.getNguoigui_id());
+            });
         } catch (SQLException ex) {
             Logger.getLogger(KienNghiService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(KienNghiService.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 }

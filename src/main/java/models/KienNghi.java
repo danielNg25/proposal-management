@@ -12,6 +12,7 @@ import java.sql.Date;
  * @author 11
  */
 public class KienNghi {
+
     private int maKienNghi;
     private String tieuDe;
     private String phanLoai;
@@ -19,9 +20,8 @@ public class KienNghi {
     private java.sql.Date ngayPhanAnh;
     private String noiDung;
     private String trangThai;
-    private int  kien_nghi_gop_id;
 
-    public KienNghi(int maKienNghi, String tieuDe, String phanLoai, int nguoigui_id, java.sql.Date ngayPhanAnh, String noiDung, String trangThai, int kien_nghi_gop_id) {
+    public KienNghi(int maKienNghi, String tieuDe, String phanLoai, int nguoigui_id, java.sql.Date ngayPhanAnh, String noiDung, String trangThai) {
         this.maKienNghi = maKienNghi;
         this.tieuDe = tieuDe;
         this.phanLoai = phanLoai;
@@ -29,7 +29,6 @@ public class KienNghi {
         this.ngayPhanAnh = ngayPhanAnh;
         this.noiDung = noiDung;
         this.trangThai = trangThai;
-        this.kien_nghi_gop_id = kien_nghi_gop_id;
     }
 
     public KienNghi() {
@@ -96,18 +95,10 @@ public class KienNghi {
         this.trangThai = trangThai;
     }
 
-    public int getKien_nghi_gop_id() {
-        return kien_nghi_gop_id;
-    }
-
-    public void setKien_nghi_gop_id(int kien_nghi_gop_id) {
-        this.kien_nghi_gop_id = kien_nghi_gop_id;
-    }
-    
     public String toString() {
-        return "Ma kien nghi: " + this.maKienNghi + 
-                "\nNguoi gui id: " + this.nguoigui_id +
-                "\nTieu de: " + this.tieuDe +
-                "\nNoi dung: " + this.noiDung;
+        return "Ma kien nghi: " + this.maKienNghi
+                + "\nNguoi gui id: " + this.nguoigui_id
+                + "\nTieu de: " + this.tieuDe
+                + "\nNoi dung: " + this.noiDung;
     }
 }

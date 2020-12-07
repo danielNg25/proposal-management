@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.KienNghi;
 import models.KienNghiGop;
 /**
@@ -49,7 +51,7 @@ public class GopKienNghiService {
         if (rs == null) {
             return null;
         }
-        List<KienNghiGop> listKienNghiGop = new ArrayList<KienNghiGop>();
+        List<KienNghiGop> listKienNghiGop = new ArrayList<>();
         while(rs.next()) {
             int maKienNghiGop = rs.getInt("id");
             String tieuDeGop = rs.getString("tieuDeGop");
@@ -82,14 +84,29 @@ public class GopKienNghiService {
         return kienNghiGopId;
     }
     
-    public static boolean updateKienNghiGopID(int kienNghiGopID, int kienNghiID) throws SQLException, ClassNotFoundException {
+    public static boolean updateKienNghiGopID(int kienNghiID, int kienNghiGopID) throws SQLException, ClassNotFoundException {
         Connection conn = MySqlConnection.getMySqlConnection();
-        String sql = "UPDATE kien_nghi SET kien_nghi_gop_id = ? WHERE id = ?";
+        String sql = "INSERT INTO kn_kng (kien_nghi_id, kien_nghi_gop_id) "
+                + "VALUES (?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, kienNghiGopID);
-        ps.setInt(2, kienNghiID);
+        ps.setInt(1, kienNghiID);
+        ps.setInt(2, kienNghiGopID);
         boolean res = ps.execute();
         conn.close();
         return res;
+    }
+    
+    public static void main(String[] args) {
+        try {
+            List<KienNghiGop> listKienNghiGop = KienNghiService.getKienNghiGop();
+            for (KienNghiGop kng : listKienNghiGop) {
+                System.out.println(kng.getTieuDeGop());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GopKienNghiService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GopKienNghiService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }
