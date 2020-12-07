@@ -49,6 +49,7 @@
                     List<KienNghiGop> listKienNghiGop = (List<KienNghiGop>) request.getAttribute("listKNG");
                     int i = 0;
                     List<KienNghi> listKienNghi = (List<KienNghi>) request.getAttribute("listKN");
+                    List<KienNghi> listKienNghiChuaGop = (List<KienNghi>) request.getAttribute("listKNCG");
                     if (request.getParameter("type") != null) {
                         listKienNghi = (List<KienNghi>) request.getAttribute("listKN1");
                     }
@@ -146,12 +147,11 @@
 
                             <tbody>
 
-                                <% for (KienNghi kn : listKienNghi) {
-                                        if (kn.getKien_nghi_gop_id() == 0) {
-                                            String hrefToggleId = "#" + "toggle" + (++i);
-                                            String toggleId = "toggle" + i;
-                                            int id = kn.getMaKienNghi();
-                                            String checkboxID = "customCheck" + Integer.toString(i);
+                                <% for (KienNghi kn : listKienNghiChuaGop) {
+                                        String hrefToggleId = "#" + "toggle" + (++i);
+                                        String toggleId = "toggle" + i;
+                                        int id = kn.getMaKienNghi();
+                                        String checkboxID = "customCheck" + Integer.toString(i);
                                 %>
 
                                 <tr>
@@ -183,9 +183,7 @@
                                             </div>
                                         </div></td>
                                 </tr>
-                                <%      }
-                                    }
-                                %>
+                                <% } %>
 
                             </tbody>
                         </table></div>

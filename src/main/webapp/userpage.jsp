@@ -94,7 +94,21 @@
                             <label for="inputNoiDung">Nội dung</label>
                             <textarea class="form-control" id="inputNoiDung" rows="5" placeholder="Nội dung" name="noiDung"></textarea> 
                         </div>
-                            <button type="submit" class="btn btn-primary">Gửi phản ánh</button>
+                        <div class="row justify-content-center">
+                            <%
+                                String err = request.getParameter("err");
+                                if ("1".equals(err)) {
+                                    out.print("<h5 style=\"color: red;\">Chưa điền tiêu đề hoặc nội dung </h5>");
+                                }
+                                String message = request.getParameter("mes");
+                                if ("success".equals(message)) {
+                                    out.print("<h5 style=\"color: green;\">Gửi thành công!</h5>");
+                                }
+                            %>
+                        </div>
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn-primary">Gửi phản ánh</button>                      
+                        </div>
                     </form>
                 </div>
             </div>
