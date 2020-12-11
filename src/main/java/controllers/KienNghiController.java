@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import Bean.KienNghiGopBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.KienNghi;
 import models.KienNghiGop;
+import services.GopKienNghiService;
 import services.KienNghiService;
 
 /**
@@ -42,9 +44,11 @@ public class KienNghiController extends HttpServlet {
             List<KienNghi> listKienNghi = KienNghiService.getKienNghi();
             List<KienNghiGop> listKienNghiGop = KienNghiService.getKienNghiGop();
             List<KienNghi> listKienNghiChuaGop = KienNghiService.getKienNghiChuaGop();
+            List<KienNghiGopBean> listKienNghiGopBean = GopKienNghiService.getKienNghiGopBean();
             request.setAttribute("listKNG", listKienNghiGop);
             request.setAttribute("listKNCG", listKienNghiChuaGop);
             request.setAttribute("listKN", listKienNghi);
+            request.setAttribute("listKNGB", listKienNghiGopBean);
             request.getRequestDispatcher("info.jsp").forward(request, response);
             
         } catch (SQLException ex) {
