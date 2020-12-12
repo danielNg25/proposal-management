@@ -75,8 +75,36 @@ public class PhanHoiService {
         return listPhanHoi;
     }
     
+    public static List<KienNghi> getKienNghiPhanHoi(int nguoigui_id) throws SQLException, ClassNotFoundException{
+        Connection conn = MySqlConnection.getMySqlConnection();
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("SELECT kien_nghi.*, phan_hoi.id as idPhanHoi, phan_hoi.noiDung as noiDungPhanHoi FROM kien_nghi "
+                + "LEFT JOIN ph_kn ON kien_nghi.id = ph_kn.kien_nghi_id "
+                + "LEFT JOIN phan_hoi ON phan_hoi.id = ph_kn.phan_hoi_id "
+                + "WHERE kien_nghi.nguoigui_id = " + nguoigui_id  +" "
+                + "AND kien_nghi.trangThai='đã trả lởi'");
+        if (rs == null) {
+            return null;
+        }
+        List<KienNghi> listKienNghi = new ArrayList<>();
+        while (rs.next()) {
+            int maKienNghi = rs.getInt("id");
+            String tieuDe = rs.getString("tieuDe");
+            Date ngayPhanAnh = rs.getDate("ngayPhanAnh");
+            String noiDung = rs.getString("noiDung");
+            String phanLoai = rs.getString("phanLoai");
+            String trangThai = rs.getString("trangThai");
+            //int idPhanHoi = rs.getInt("idPhanHoi");
+            String noiDungPhanHoi = rs.getString("noiDungPhanHoi");
+            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai, noiDungPhanHoi);
+            listKienNghi.add(kienNghi);
+        }
+        conn.close();
+        return listKienNghi;
+    }
+    
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        PhanHoi ph = getPhanHoi(1);
-        System.out.println(ph.getId());
+        List<KienNghi> list = getKienNghiPhanHoi(3);
+        System.out.println(list.toString());
     }
 }
