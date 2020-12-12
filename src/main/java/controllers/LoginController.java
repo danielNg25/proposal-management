@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -19,10 +20,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import models.KienNghi;
 import models.NguoiDan;
+import models.PhanHoiForUser;
 import models.User;
 import services.MySqlConnection;
 import services.NguoiDanService;
+import services.PhanHoiService;
 import services.UserService;
 
 /**
@@ -55,7 +59,8 @@ public class LoginController extends HttpServlet {
                 user.setID(userID);
                 user.setUserName(username);
                 user.setPasswd(password);
-                
+                List<KienNghi> listKNPhanHoi = PhanHoiService.getKienNghiPhanHoi(userID);
+                request.setAttribute("listPH", listKNPhanHoi);
                 session.setAttribute("userID", userID);
                 request.setAttribute("user", user);
                 

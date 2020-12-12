@@ -20,6 +20,9 @@ public class KienNghi {
     private java.sql.Date ngayPhanAnh;
     private String noiDung;
     private String trangThai;
+    private String noiDungPhanHoi;
+    
+    
 
     public KienNghi(int maKienNghi, String tieuDe, String phanLoai, int nguoigui_id, java.sql.Date ngayPhanAnh, String noiDung, String trangThai) {
         this.maKienNghi = maKienNghi;
@@ -37,6 +40,17 @@ public class KienNghi {
     public KienNghi(String tieuDe, String noiDung) {
         this.tieuDe = tieuDe;
         this.noiDung = noiDung;
+    }
+
+    public KienNghi(int maKienNghi, String tieuDe, String phanLoai, int nguoigui_id, Date ngayPhanAnh, String noiDung, String trangThai, String noiDungPhanHoi) {
+        this.maKienNghi = maKienNghi;
+        this.tieuDe = tieuDe;
+        this.phanLoai = phanLoai;
+        this.nguoigui_id = nguoigui_id;
+        this.ngayPhanAnh = ngayPhanAnh;
+        this.noiDung = noiDung;
+        this.trangThai = trangThai;
+        this.noiDungPhanHoi = noiDungPhanHoi;
     }
 
     public int getMaKienNghi() {
@@ -95,6 +109,15 @@ public class KienNghi {
         this.trangThai = trangThai;
     }
 
+    public String getNoiDungPhanHoi() {
+        return noiDungPhanHoi;
+    }
+
+    public void setNoiDungPhanHoi(String noiDungPhanHoi) {
+        this.noiDungPhanHoi = noiDungPhanHoi;
+    }
+
+    
     public String toString() {
         return "Ma kien nghi: " + this.maKienNghi
                 + "\nNguoi gui id: " + this.nguoigui_id
