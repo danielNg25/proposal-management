@@ -74,4 +74,9 @@ public class PhanHoiService {
         conn.close();
         return listPhanHoi;
     }
+    
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        PhanHoi ph = getPhanHoi(1);
+        System.out.println(ph.getId());
+    }
 }

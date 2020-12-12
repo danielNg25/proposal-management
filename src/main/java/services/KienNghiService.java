@@ -46,6 +46,27 @@ public class KienNghiService {
         return null;
 
     }
+    
+    public static List<KienNghi> getKienNghiDaTraLoi() throws SQLException, ClassNotFoundException {
+         Connection conn = MySqlConnection.getMySqlConnection();
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM kien_nghi "
+                + "WHERE trangThai = 'đã trả lời'");
+        List<KienNghi> listKienNghi = new ArrayList<KienNghi>();
+        while (rs.next()) {
+            int maKienNghi = rs.getInt("id");
+            String tieuDe = rs.getString("tieuDe");
+            Date ngayPhanAnh = rs.getDate("ngayPhanAnh");
+            String noiDung = rs.getString("noiDung");
+            String phanLoai = rs.getString("phanLoai");
+            String trangThai = rs.getString("trangThai");
+            int nguoigui_id = rs.getInt("nguoigui_id");
+            KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai);
+            listKienNghi.add(kienNghi);
+        }
+        conn.close();
+        return listKienNghi;
+    }
 
     public static List<KienNghi> getKienNghi() throws SQLException, ClassNotFoundException {
 
@@ -138,9 +159,9 @@ public class KienNghiService {
 
     public static void main(String[] args) {
         try {
-            List<KienNghi> kncg = getKienNghiChuaGop();
-            kncg.forEach(kn -> {
-                System.out.println(kn.getNguoigui_id());
+            List<KienNghi> kndtl = getKienNghiDaTraLoi();
+            kndtl.forEach(kn -> {
+                System.out.println(kn.getMaKienNghi());
             });
         } catch (SQLException ex) {
             Logger.getLogger(KienNghiService.class.getName()).log(Level.SEVERE, null, ex);

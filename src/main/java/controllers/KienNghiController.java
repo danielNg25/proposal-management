@@ -18,8 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.KienNghi;
 import models.KienNghiGop;
+import models.PhanHoi;
 import services.GopKienNghiService;
 import services.KienNghiService;
+import services.PhanHoiService;
 
 /**
  *
@@ -45,6 +47,10 @@ public class KienNghiController extends HttpServlet {
             List<KienNghiGop> listKienNghiGop = KienNghiService.getKienNghiGop();
             List<KienNghi> listKienNghiChuaGop = KienNghiService.getKienNghiChuaGop();
             List<KienNghiGopBean> listKienNghiGopBean = GopKienNghiService.getKienNghiGopBean();
+            List<PhanHoi> listPhanHoi = PhanHoiService.getPhanHoi();
+            List<KienNghi> listDaTraLoi = (List<KienNghi>) KienNghiService.getKienNghiDaTraLoi();
+            request.setAttribute("listDaTraLoi", listDaTraLoi);
+            request.setAttribute("listPH", listPhanHoi);
             request.setAttribute("listKNG", listKienNghiGop);
             request.setAttribute("listKNCG", listKienNghiChuaGop);
             request.setAttribute("listKN", listKienNghi);

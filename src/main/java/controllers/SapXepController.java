@@ -46,8 +46,8 @@ public class SapXepController extends HttpServlet {
             } else {
                 try {
                     ArrayList<KienNghi> listKN = SapXepService.OrderByType(req);
-                    request.setAttribute("listKN1", listKN);
-                    request.getRequestDispatcher("quanly?type=" + req).forward(request, response);
+                    request.setAttribute("listKNCG1", listKN);
+                    request.getRequestDispatcher("quanly?order=" + req).forward(request, response);
                 } catch (SQLException ex) {
                     Logger.getLogger(SapXepController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
@@ -62,8 +62,8 @@ public class SapXepController extends HttpServlet {
                 } else {
                     listKN = SapXepService.OrderByDateASC();
                 }
-                request.setAttribute("listKN1", listKN);
-                request.getRequestDispatcher("quanly?type=date").forward(request, response);
+                request.setAttribute("listKNCG1", listKN);
+                request.getRequestDispatcher("quanly?order="+req1).forward(request, response);
             } catch (SQLException ex) {
                 Logger.getLogger(SapXepController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {

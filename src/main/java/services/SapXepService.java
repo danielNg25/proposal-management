@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.util.List;
 import models.KienNghi;
 
 /**
@@ -64,12 +65,16 @@ public class SapXepService {
     }
     
     public static ArrayList<KienNghi> OrderByDateASC() throws SQLException, ClassNotFoundException {
-        ArrayList<KienNghi> listKN  = new ArrayList<>();
-        conn = MySqlConnection.getMySqlConnection();
+        Connection conn = MySqlConnection.getMySqlConnection();
         Statement st = conn.createStatement();
-        String sql = "SELECT * FROM kien_nghi "
-                +    "ORDER BY ngayPhanAnh ASC";
-        ResultSet rs = st.executeQuery(sql);
+        ResultSet rs = st.executeQuery("SELECT * FROM kien_nghi "
+                + "WHERE kien_nghi.id NOT IN ("
+                + "SELECT kien_nghi_id FROM kn_kng) "
+                + "ORDER BY ngayPhanAnh ASC");
+        if (rs == null) {
+            return null;
+        }
+        ArrayList<KienNghi> listKienNghiChuaGop = new ArrayList<>();
         while (rs.next()) {
             int maKienNghi = rs.getInt("id");
             String tieuDe = rs.getString("tieuDe");
@@ -79,19 +84,22 @@ public class SapXepService {
             String trangThai = rs.getString("trangThai");
             int nguoigui_id = rs.getInt("nguoigui_id");
             KienNghi kienNghi = new KienNghi(maKienNghi, tieuDe, phanLoai, nguoigui_id, ngayPhanAnh, noiDung, trangThai);
-            listKN.add(kienNghi);
+            listKienNghiChuaGop.add(kienNghi);
+            
         }
-        conn = null;
-        return listKN;
+        conn.close();
+        return listKienNghiChuaGop;
+  
     }
     
     public static ArrayList<KienNghi> OrderByDateDESC() throws SQLException, ClassNotFoundException {
         ArrayList<KienNghi> listKN  = new ArrayList<>();
         conn = MySqlConnection.getMySqlConnection();
         Statement st = conn.createStatement();
-        String sql = "SELECT * FROM kien_nghi "
-                +    "ORDER BY ngayPhanAnh DESC";
-        ResultSet rs = st.executeQuery(sql);
+        ResultSet rs = st.executeQuery("SELECT * FROM kien_nghi "
+                + "WHERE kien_nghi.id NOT IN ("
+                + "SELECT kien_nghi_id FROM kn_kng) "
+                + "ORDER BY ngayPhanAnh DESC");
         while (rs.next()) {
             int maKienNghi = rs.getInt("id");
             String tieuDe = rs.getString("tieuDe");
@@ -132,9 +140,11 @@ public class SapXepService {
         ArrayList<KienNghi> listKN  = new ArrayList<>();
         conn = MySqlConnection.getMySqlConnection();
         Statement st = conn.createStatement();
-        String sql = "SELECT * FROM kien_nghi "
-                +    "WHERE phanLoai ='" +type +"'";
-        ResultSet rs = st.executeQuery(sql);
+        ResultSet rs = st.executeQuery("SELECT * FROM kien_nghi "
+                + "WHERE kien_nghi.id NOT IN ("
+                + "SELECT kien_nghi_id FROM kn_kng) "
+                + "AND phanLoai='" + type+"' "
+                + "ORDER BY ngayPhanAnh DESC");
         while (rs.next()) {
             int maKienNghi = rs.getInt("id");
             String tieuDe = rs.getString("tieuDe");
@@ -149,4 +159,8 @@ public class SapXepService {
         conn = null;
         return listKN;
     }    
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        List<KienNghi> listkn = OrderByType("Chính sách");
+        System.out.println(listkn.toString());
+    }
 }
