@@ -31,6 +31,7 @@ public class ThongKe {
     private int CacLoai;
     private int DaPhanLoai;   
     private int ChuaPhanLoai;
+   
     
     public ThongKe(){
         SoLuong = 0;

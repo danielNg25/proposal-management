@@ -68,7 +68,7 @@
                                                 long noDay = (c2.getTime().getTime() - c1.getTime().getTime()) / (24 * 3600 * 1000);
                                             %> 
                                     <li>
-                                        <a href="phanhoi.jsp" class="top-text-block">
+                                        <a href="#" class="top-text-block">
                                             <div class="top-text-heading">Kiến Nghị <b><%=listPH.get(i).getTieuDe()%></b> đã được trả lời</div>
                                             <div class="top-text-light"><%= noDay%> Ngày trước</div>
                                         </a> 
@@ -89,7 +89,7 @@
                                 ${hoTen}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="phanhoi.jsp">Hồ sơ</a>
+                                <a class="dropdown-item" href="#">Hồ sơ</a>
                                 <a class="dropdown-item" href="logout">Log out</a>
                             </div>
                         </li>
@@ -98,9 +98,9 @@
             </div>
         </nav>
                 <%
-                    int userID = (int)session.getAttribute("userID");
-                    List<KienNghi> listKienNghi = PhanHoiService.getKienNghiPhanHoi(userID);
-                    List<KienNghi> listChuaPhanHoi = PhanHoiService.getChuaPhanHoi(userID);
+                    
+                    List<KienNghi> listKienNghi = (List<KienNghi>) request.getAttribute("listKN");
+                    List<KienNghi> listChuaPhanHoi = (List<KienNghi>) request.getAttribute("listCPH");
                 %>
         <table class="table table-hover table-bordered">
                             <thead class="thead-light">
@@ -134,10 +134,7 @@
                                 %>
 
                                 <tr>
-                                    <td>
-                                        <span style="cursor: pointer;" class="accordion-toggle collapsed"
-                                              data-toggle="collapse" href="<%=hrefToggleId%>">+</span>
-                                    </td>
+                                    <td></td>
                                     <td><%=kn.getTieuDe()%></td>
                                     <td><%=kn.getPhanLoai()%></td>
                                     <td><%=kn.getNgayPhanAnh()%></td>

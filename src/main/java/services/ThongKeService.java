@@ -33,7 +33,7 @@ public class ThongKeService {
         }
         while(rs.next()) {
             SoLuong++;
-            if (rs.getString("trangThai").equals("chưa trả lời"));
+            if (rs.getString("trangThai").equals("chưa trả lời"))
                 ChuaTraLoi++;
             if (rs.getString("phanLoai")!=null) 
                 DaPhanLoai++;
@@ -50,28 +50,33 @@ public class ThongKeService {
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM kien_nghi WHERE QUARTER(ngayPhanAnh) = " + quy +" ");
         Statement st1 = conn.createStatement();
-        ResultSet rs1 = st1.executeQuery("SELECT DISTINCT phanLoai FROM kien_nghi WHERE QUARTER(ngayPhanAnh)= " + quy +" ");
+        ResultSet rs1 = st1.executeQuery("SELECT DISTINCT phanLoai FROM kien_nghi WHERE QUARTER(ngayPhanAnh)=" + quy);
         int CacLoai = 0;
         int SoLuong = 0;
         int ChuaTraLoi = 0;
         int DaPhanLoai = 0;
-        int DaTraLoi;
-        int ChuaPhanLoai;
+        int DaTraLoi=0;
+        int ChuaPhanLoai=0;
         while(rs1.next()) {
             CacLoai++;
         }
         while(rs.next()) {
             SoLuong++;
-            if (rs.getString("trangThai").equals("chưa trả lời"));
+            if (rs.getString("trangThai").equals("chưa trả lời"))
                 ChuaTraLoi++;
             if (rs.getString("phanLoai")!=null) 
                 DaPhanLoai++;
         }
-        DaTraLoi = SoLuong - ChuaTraLoi;
         ChuaPhanLoai = SoLuong - DaPhanLoai;
+        DaTraLoi = SoLuong - ChuaTraLoi;
         ThongKe tk = new ThongKe(SoLuong, DaTraLoi, ChuaTraLoi, CacLoai, DaPhanLoai, ChuaPhanLoai);
         conn.close();
         return tk;
+    }
+     
+     public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        ThongKe tk = getThongKeQuy(4);
+        System.out.println(tk.getDaTraLoi()+ " " + tk.getChuaTraLoi() + " " + tk.getSoLuong());
     }
 }
     

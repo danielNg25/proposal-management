@@ -35,7 +35,6 @@
                 <h2>Quản Lý</h2>
                 <ul>
                     <li><a href="adminpage.jsp"><i class="fas fa-home"></i>Trang chủ</a></li>
-                    <li><a href="#"><i class="fas fa-user"></i>Hồ Sơ</a></li>
                     <li><a href="quanly"><i class="fas fa-address-card"></i>Thông Tin Kiến Nghị</a></li>                    
                     <li><a href="#"><i class="fas fa-address-book"></i>Gửi Kiến Nghị</a></li>
                     <li><a href="login.jsp">Đăng Xuất</a></li>
@@ -130,8 +129,8 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 2%"></th>
-                                    <th scope="col">Tiêu đề</th>
-                                    <th scope="col">                                      
+                                    <th scope="col" style="width: 50%">Tiêu đề</th>
+                                    <th scope="col" style="width: 15%">                                      
                                         <div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Phân loại
@@ -146,7 +145,7 @@
                                             </div>
                                         </div>            
                                     </th>
-                                    <th scope="col"><div class="dropdown">
+                                    <th scope="col" style="width: 15%"><div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Ngày phản ánh
                                             </button>

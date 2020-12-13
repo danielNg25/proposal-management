@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -21,6 +22,7 @@ import models.KienNghi;
 import models.NguoiDan;
 import services.KienNghiService;
 import services.NguoiDanService;
+import services.PhanHoiService;
 
 /**
  *
@@ -59,6 +61,8 @@ public class GuiKienNghiController extends HttpServlet {
             request.setAttribute("email", nd.getEmail());
             request.setAttribute("gioiTinh", nd.getGioiTinh());
             request.setAttribute("cmnd", nd.getCmnd());
+            List<KienNghi> listKNPhanHoi = PhanHoiService.getKienNghiPhanHoi(nguoigui_id);
+            request.setAttribute("listPH", listKNPhanHoi);
 
             if ("".equals(tieuDe) || "".equals(noiDung)) {
                 request.getRequestDispatcher("userpage.jsp?err=1").forward(request, response);

@@ -55,7 +55,10 @@ public class PhanHoiController extends HttpServlet {
             request.setAttribute("email", nd.getEmail());
             request.setAttribute("gioiTinh", nd.getGioiTinh());
             request.setAttribute("cmnd", nd.getCmnd());
-            
+            List<KienNghi> listKienNghi = PhanHoiService.getKienNghiPhanHoi(userID);
+            List<KienNghi> listChuaPhanHoi = PhanHoiService.getChuaPhanHoi(userID);
+            request.setAttribute("listKN", listKienNghi);
+            request.setAttribute("listCPH", listChuaPhanHoi);
             response.setContentType("text/html;charset=UTF-8");
             request.setCharacterEncoding("UTF-8");
             
