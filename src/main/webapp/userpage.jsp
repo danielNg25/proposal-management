@@ -56,7 +56,7 @@
                                                 long noDay = (c2.getTime().getTime() - c1.getTime().getTime()) / (24 * 3600 * 1000);
                                             %> 
                                     <li>
-                                        <a href="#" class="top-text-block">
+                                        <a href="phanhoi" class="top-text-block">
                                             <div class="top-text-heading">Kiến Nghị <b><%=listPH.get(i).getTieuDe()%></b> đã được trả lời</div>
                                             <div class="top-text-light"><%= noDay%> Ngày trước</div>
                                         </a> 
@@ -77,7 +77,7 @@
                                 ${hoTen}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Hồ sơ</a>
+                                <a class="dropdown-item" href="phanhoi">Hồ sơ</a>
                                 <a class="dropdown-item" href="logout">Log out</a>
                             </div>
                         </li>

@@ -7,11 +7,20 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import models.KienNghi;
+import models.NguoiDan;
+import services.NguoiDanService;
+import services.PhanHoiService;
 
 /**
  *
@@ -19,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "PhanHoiController", urlPatterns = {"/phanhoi"})
 public class PhanHoiController extends HttpServlet {
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,7 +41,30 @@ public class PhanHoiController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        try {
+            HttpSession session = request.getSession();
+            int userID = (int)session.getAttribute("userID");
+            response.setContentType("text/html;charset=UTF-8");
+            List<KienNghi> listKNPhanHoi = PhanHoiService.getKienNghiPhanHoi(userID);
+            request.setAttribute("listPH", listKNPhanHoi);
+            NguoiDan nd = NguoiDanService.getNguoiDan(userID);
+            request.setAttribute("nguoiDan", nd);
+            request.setAttribute("hoTen", nd.getHoTen());
+            request.setAttribute("diaChi", nd.getDiaChi());
+            request.setAttribute("sdt", nd.getSoDienThoai());
+            request.setAttribute("email", nd.getEmail());
+            request.setAttribute("gioiTinh", nd.getGioiTinh());
+            request.setAttribute("cmnd", nd.getCmnd());
+            
+            response.setContentType("text/html;charset=UTF-8");
+            request.setCharacterEncoding("UTF-8");
+            
+            request.getRequestDispatcher("phanhoi.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(PhanHoiController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PhanHoiController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
