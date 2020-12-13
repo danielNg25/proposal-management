@@ -1,7 +1,9 @@
   
 #body {
   font-family: 'Nunito';
-background-color:  #5d8fc9;
+    background-color: #5d8fc9;
+    background-image: url(https://scr.vn/wp-content/uploads/2020/08/H%C3%ACnh-n%E1%BB%81n-tr%E1%BB%91ng-%C4%91%E1%BB%93ng-%C4%90%C3%B4ng-S%C6%A1n.jpg);
+    background-size: cover;
 }
 #login-card{
     width:350px;
@@ -41,6 +43,5 @@ background-color:  #5d8fc9;
             border-radius: 25px; 
             font-size: 14px; 
             text-align: center;
-            
             margin: 8px;
         }
